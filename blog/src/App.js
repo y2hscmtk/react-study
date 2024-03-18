@@ -41,8 +41,8 @@ function App() {
         <h4>{a}</h4>
         <p>2월 17일 발행</p>
       </div>
-      <Title titleName="테스트" />
-      <Title titleName='테스트2'/>
+      <Title titleName="강남 우동맛집" />
+      <Title titleName='파이썬독학'/>
     </div>
   );
 }
