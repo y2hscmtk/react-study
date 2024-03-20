@@ -34,6 +34,8 @@ function App() {
   // 현재 모달창의 상태를 저장 false 안보임, true 보임
   let [modalState,setModalState] = useState(false)
 
+  let [title,setTitle] = useState(0) // 현재 보고 있는 게시글의 번호
+
   return (
   // return에는 하나의 컴포넌트만 리턴 가능하다.
     <div className="App">
@@ -66,20 +68,31 @@ function App() {
             //   <h4 onClick={()=>{setModalState(true)}}>{name}</h4>
             //   <p>2월 17일 발행</p>
             // </div>
-            <Title titleName={name}/>
+            // 사용자가 게시글 선택시 setModalState로 게시글 띄우기
+            <Title 
+            titleName={name} 
+            setModalState={setModalState} 
+            index={i}
+            setTitle={setTitle}/>
           )
         })
       }
 
-      <div className='list'>
+      {/* <div className='list'>
         <h4 onClick={()=>{setModalState(true)}}>{글제목[0]}</h4>
         <p>2월 17일 발행</p>
-      </div>
+      </div> */}
       {/* <Title titleName={글제목[1]}/>
       <Title titleName={글제목[2]}/> */}
 
       {
-        modalState ? <Modal color={'yellow'} postName={글제목}></Modal> : null
+        // 변수 뿐만 아니라 함수도 props를 통해서 전달 가능
+        modalState ? <Modal 
+        color={'yellow'} 
+        postName={글제목} 
+        글제목변경={글제목변경}
+        title={title}>
+        </Modal> : null
       }
       
     </div>
@@ -100,9 +113,10 @@ function Modal(props){
   // 의미없는 div라면 <></>로 묶는 것도 가능하다. fragment문법
   return(
     <div className='modal' style={{background:props.color}}>
-      <h4>{props.postName[0]}</h4>
+      <h4>{props.postName[props.title]}</h4>
       <p>날짜</p>
       <p>상세 내용</p>
+      {/* <button onClick={()=>{props.글제목변경(['여자코트 추천','강남 ~~','파이썬 독학'])}}>글 수정</button> */}
     </div>
   )
 }
