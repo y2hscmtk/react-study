@@ -55,12 +55,28 @@ function App() {
         // 기존 state == 신규 state 의 경우, 변경하지 않는다.
       }}>정렬</button>
 
+
+      {
+        // {}안에서는 for문 사용 불가능 -> map함수 사용
+        // 글 제목 데이터 수만큼 반복하면서 데이터 바인딩
+        // name : 데이터의 값, i는 인덱스 번호
+        글제목.map(function(name,i){
+          return(
+            // <div className='list'>
+            //   <h4 onClick={()=>{setModalState(true)}}>{name}</h4>
+            //   <p>2월 17일 발행</p>
+            // </div>
+            <Title titleName={name}/>
+          )
+        })
+      }
+
       <div className='list'>
         <h4 onClick={()=>{setModalState(true)}}>{글제목[0]}</h4>
         <p>2월 17일 발행</p>
       </div>
-      <Title titleName={글제목[1]}/>
-      <Title titleName={글제목[2]}/>
+      {/* <Title titleName={글제목[1]}/>
+      <Title titleName={글제목[2]}/> */}
 
       {
         modalState ? <Modal></Modal> : null
