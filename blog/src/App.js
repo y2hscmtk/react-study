@@ -18,31 +18,47 @@ function App() {
   // 변수 값을 넣을 때는 {중괄호}를 활용한다. => 데이터 바인딩
   // 값을 잠간 저장할 때는 state를 활용하여 저장한다
   // 다시 사용할때는 [변수명,변수명] 등과 같이 사용한다.
-  let [a,b] = useState('남자 코트 추천'); // a,b는 나중에 값을 꺼내기 위함
+  // let [a,b] = useState('남자 코트 추천'); // a,b는 나중에 값을 꺼내기 위함
   // a에는 useState에 저장했던 값이 그대로 담긴다.
   // b => state 변경을 도와주는 함수 => a의 값이 변경될때 수행될 함수
   // 변수 vs State => State는 값이 변경되면 html코드도 다시 값이 변경된다.(재랜더링,상태감지)
 
   // Destructuring 문법
-  let num = [1,2]
-  let [d,c] = [1,2] // d,c에 1,2를 자동으로 빼온다.(형태를 맞춰야함)
+  // let num = [1,2]
+  // let [d,c] = [1,2] // d,c에 1,2를 자동으로 빼온다.(형태를 맞춰야함)
 
   // 블로그 제목 state변수화
   let [logo,setLogo] = useState('ReactBlog');
 
+  let [글제목, 글제목변경] = useState(['남자코트 추천','강남 우동 맛집','파이썬독학'])
 
-  return ( // 상단 메뉴 만들기 jsx
+  return (
   // return에는 하나의 컴포넌트만 리턴 가능하다.
     <div className="App">
       <div className = "black-nav">
         <h4 style={{color :'red'}}>{logo}</h4>
       </div>
+
+      <button onClick={()=>{
+        let copy = [...글제목] // unpacking
+        copy[0] = '여자코트 추천' // 상태 변경,원본 보존
+        글제목변경(copy) // state 변경함수는 매개변수로 전달받은 값으로 원본 값을 변경시킨다.
+        // 기존 state == 신규 state 의 경우, 변경하지 않는다.
+      }}>글 수정</button>
+
+      <button onClick={()=>{
+        let copy = [...글제목] // unpacking
+        copy.sort() 
+        글제목변경(copy) // state 변경함수는 매개변수로 전달받은 값으로 원본 값을 변경시킨다.
+        // 기존 state == 신규 state 의 경우, 변경하지 않는다.
+      }}>정렬</button>
+
       <div className='list'>
-        <h4>{a}</h4>
+        <h4>{글제목[0]}</h4>
         <p>2월 17일 발행</p>
       </div>
-      <Title titleName="강남 우동맛집" />
-      <Title titleName='파이썬독학'/>
+      <Title titleName={글제목[1]}/>
+      <Title titleName={글제목[2]}/>
     </div>
   );
 }
