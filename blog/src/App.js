@@ -59,9 +59,31 @@ function App() {
       </div>
       <Title titleName={글제목[1]}/>
       <Title titleName={글제목[2]}/>
+
+      <Modal/>
+      
     </div>
   );
 }
 
+// 컴포넌트 만드는 법
+// 1. function 만들고
+// 2. return() 안에 html 담기
+// 3. <함수명></함수명>으로 사용
+// 작명은 영어 대문자로 만들기 => Naming Rule
+// 컴포넌트 사용 경우 : 반복적인 html을 축약할때, 큰 페이지들을 만들 때, 자주 변경되는 ui를 작성할 때
+// 컴포넌트의 단점 : state를 가져다 쓸 때 문제가 생긴다.(다른 함수에는 해당 state변수가 없기 때문이다.)
+function Modal(){
+  // return 소괄호 안에는 하나의 탭으로 시작해서 하나의 탭으로 끝나야 한다.
+  // 2개 이상의 탭을 리턴하면 안된다.
+  // 의미없는 div라면 <></>로 묶는 것도 가능하다. fragment문법
+  return(
+    <div className='modal'>
+      <h4>제목</h4>
+      <p>날짜</p>
+      <p>상세 내용</p>
+    </div>
+  )
+}
 
 export default App
