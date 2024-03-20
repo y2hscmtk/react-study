@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 // state : 값을 저장하기 위한 저장소 역할
 import { useState } from 'react'; 
@@ -32,6 +31,9 @@ function App() {
 
   let [글제목, 글제목변경] = useState(['남자코트 추천','강남 우동 맛집','파이썬독학'])
 
+  // 현재 모달창의 상태를 저장 false 안보임, true 보임
+  let [modalState,setModalState] = useState(false)
+
   return (
   // return에는 하나의 컴포넌트만 리턴 가능하다.
     <div className="App">
@@ -54,13 +56,15 @@ function App() {
       }}>정렬</button>
 
       <div className='list'>
-        <h4>{글제목[0]}</h4>
+        <h4 onClick={()=>{setModalState(true)}}>{글제목[0]}</h4>
         <p>2월 17일 발행</p>
       </div>
       <Title titleName={글제목[1]}/>
       <Title titleName={글제목[2]}/>
 
-      <Modal/>
+      {
+        modalState ? <Modal></Modal> : null
+      }
       
     </div>
   );
@@ -85,5 +89,10 @@ function Modal(){
     </div>
   )
 }
+
+// 동적인 UI 만들기
+// 1. html css로 미리 디자인 완성
+// 2. UI의 현재 상태를 state로 저장
+// 3. state에 따라 UI가 어떻게 보일지 작성
 
 export default App
