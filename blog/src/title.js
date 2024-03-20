@@ -8,7 +8,12 @@ function Title(props){
     return(
         <div className='list'>
             <h4 onClick={()=>{props.setModalState(true); props.setTitle(props.index)}}>{props.titleName}
-                <span onClick={()=>setLike(like+1)}>👍</span>{like}
+                {/* span태그는 div > h4 > 이후에 존재하므로, 
+                span을 누르면 span,h4,div를 모두 누른 효과
+                =>이벤트 버블(이벤트가 상위 요소로 퍼지는 현상)
+                이벤트 버블을 멈추기 위해서 stopPropagation사용
+                 */}
+                <span onClick={(e)=>{setLike(like+1); e.stopPropagation()}}>👍</span>{like}
             </h4>
             <p>2월 17일 발행</p>
         </div>

@@ -36,6 +36,8 @@ function App() {
 
   let [title,setTitle] = useState(0) // 현재 보고 있는 게시글의 번호
 
+  let [입력값,입력값변경] = useState('') // 사용자가 입력한 값 저장
+
   return (
   // return에는 하나의 컴포넌트만 리턴 가능하다.
     <div className="App">
@@ -85,6 +87,16 @@ function App() {
       {/* <Title titleName={글제목[1]}/>
       <Title titleName={글제목[2]}/> */}
 
+      {/* e : 이벤트 객체, 현재 이벤트에 대한 정보
+      e.target : 이벤트를 발생시킨 객체 */}
+      <input onChange={(e)=>{입력값변경(e.target.value)}}></input>
+      <button onClick={()=>{
+        let copy = [...글제목] // unpacking
+        copy.push(입력값) // 사용자가 새롭게 
+        글제목변경(copy) // state 변경함수는 매개변수로 전달받은 값으로 원본 값을 변경시킨다.
+        // 기존 state == 신규 state 의 경우, 변경하지 않는다.
+      }}>작성</button>
+
       {
         // 변수 뿐만 아니라 함수도 props를 통해서 전달 가능
         modalState ? <Modal 
@@ -95,6 +107,7 @@ function App() {
         </Modal> : null
       }
       
+
     </div>
   );
 }
