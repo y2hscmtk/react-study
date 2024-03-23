@@ -11,6 +11,9 @@ import bg_image_name from './bg.png'
 // 다른 파일에서 데이터 받아오기
 import data from './data.js'
 
+// 신발 컴포넌트
+import Shoe from './shoe.js'
+
 
 // React Bootstrap에서 버튼 사용하기
 function App() {
@@ -33,25 +36,13 @@ function App() {
 
       </div>
       {/* 상품 목록 */}
+      {/* 수 많은 이미지를 사용해야 한다면 Public폴더에 이미지를 넣고 사용한다. 접근 방법은 /이미지이름 이다 */}
       <div className='container'>
         <div className='row'>
-          <div className='col-md-4'>
-            <img src='https://codingapple1.github.io/shop/shoes1.jpg' width="80%"/>
-            <h4>{shoes[0].title}</h4>
-            <p>{shoes[0].price}</p>
-          </div>
-          {/* 수 많은 이미지를 사용해야 한다면 Public폴더에 이미지를 넣고 사용한다. 접근 방법은 /이미지이름 이다 */}
-          <div className='col-md-4'>
-            <img src='https://codingapple1.github.io/shop/shoes2.jpg' width="80%"/>
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </div>
-          <div className='col-md-4'>
-            <img src='https://codingapple1.github.io/shop/shoes3.jpg' width="80%"/>
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </div>
-
+          {shoes.map((data,i)=>{return <Shoe data = {data}></Shoe>})}
+          {/* <Shoe data ={shoes[0]}></Shoe>
+          <Shoe data ={shoes[1]}></Shoe>
+          <Shoe data ={shoes[2]}></Shoe> */}
         </div>
       </div>
 
