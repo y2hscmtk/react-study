@@ -15,7 +15,7 @@ import data from './data.js'
 import Shoe from './shoe.js'
 
 // 화면 전환
-import {Routes, Route, Link} from 'react-router-dom'
+import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom'
 
 
 // React Bootstrap에서 버튼 사용하기
@@ -23,14 +23,19 @@ function App() {
 
   let [shoes] = useState(data) // data.js 의 데이터 가져오기
 
+  // useNavigate 훅 : 페이지 이동을 도와주는 함수
+  let navigate = useNavigate() 
+
   return (
     <div className='App'>
       <Navbar bg="light" data-bs-theme="light">
         <Container>
           <Navbar.Brand href="">ShoeShop</Navbar.Brand>
           <Nav className="me-auto">
-            <Link to="">홈</Link>
-            <Link to="detail">상세페이지</Link>
+            {/* useNavigate => 함수안의 파라미터로 이동시켜줌, 
+            숫자를 적을 경우 앞으로 한페이지, 뒤로 한페이지 등(뒤로가기 버튼, 뒤로가기 버튼 등에 해당)*/}
+            <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/detail')}}>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -54,17 +59,49 @@ function App() {
               </div>
             </div>
         </div>}/>
-        <Route path='/about' element={<div>어바웃페이지입니다.</div>}/>
+        
+        {/* '*'은 우리가 만들어둔 라우터 제외 모든 페이지 => 없는 페이지, 오류 페이지 */}
+        <Route path='*' element={<div>없는 페이지입니다.</div>}/>
+
+        {/* Nested Routes */}
+        <Route path='/about' element={<About/>}>
+          {/* Route안에 Route를 두면 /about/member 에 해당함
+          내부 어디에 보여줄지 특정 위치를 기입해야 한다. */}
+          <Route path='member' element={<div>멤버</div>}/>
+          <Route path='location' element={<div>위치정보</div>}/>
+        </Route>
+
+        <Route path='/event' element={<Homework/>}>
+          <Route path='one' element={<div>첫 주문시 양배추즙 서비스</div>}/>
+          <Route path='two' element={<div>생일기념 쿠폰받기</div>}/>
+
+        </Route>
+        
+        
       </Routes>
-
-      
-
-
-
-
 
     </div>
   );
 }
 
 export default App;
+
+function Homework(){
+  return(
+    <>
+      <h4>오늘의 이벤트</h4>
+      <Outlet></Outlet>
+    </>
+  )
+}
+
+
+function About(){
+  return (
+    <div>
+      <h4>회사 정보임</h4>
+      {/* outlet은 nested routes안의 element들을 어디에 보여줄지 표기하는 용도. */}
+      <Outlet></Outlet>
+    </div>
+  )
+}
