@@ -17,6 +17,7 @@ import Shoe from './shoe.js'
 // 화면 전환
 import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom'
 
+import Detail from './Detail.js';
 
 // React Bootstrap에서 버튼 사용하기
 function App() {
@@ -35,7 +36,7 @@ function App() {
             {/* useNavigate => 함수안의 파라미터로 이동시켜줌, 
             숫자를 적을 경우 앞으로 한페이지, 뒤로 한페이지 등(뒤로가기 버튼, 뒤로가기 버튼 등에 해당)*/}
             <Nav.Link onClick={()=>{navigate('/')}}>Home</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/detail')}}>Cart</Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/detail/0')}}>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -62,6 +63,7 @@ function App() {
         
         {/* '*'은 우리가 만들어둔 라우터 제외 모든 페이지 => 없는 페이지, 오류 페이지 */}
         <Route path='*' element={<div>없는 페이지입니다.</div>}/>
+        <Route path='/detail' element={<Detail/>}/>
 
         {/* Nested Routes */}
         <Route path='/about' element={<About/>}>
@@ -76,7 +78,9 @@ function App() {
           <Route path='two' element={<div>생일기념 쿠폰받기</div>}/>
 
         </Route>
-        
+
+        {/* 페이지를 여러개 만들고 싶다면 URL파라미터 활용 :id 를 통해 아아디 전달*/}
+        <Route path='/detail/:id' element={<Detail shoes = {shoes} />}></Route>
         
       </Routes>
 
