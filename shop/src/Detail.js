@@ -22,21 +22,36 @@ function Detail(props){
     let {id} = useParams() // 파라미터 정보가 담기는 훅
     let 찾은상품 = props.shoes.find(x => x.id == id) // 위치 변경되도 아이디로 찾으면 괜찮음
 
+    let [alert,setAlert] = useState(true)
+
     // useEffect : Detail이 처음 mount(장착)될때, 업데이트 될 때 동작하는 훅
     // 업데이트 => 재랜더링
     // 랜더링이 다 끝난 이후에 수행된다.
     useEffect(()=>{
         console.log('안녕')
         // 오랜 시간이 드는 작업의 경우, useEffect에서 수행(밖에서 사용하면 그 이후에 페이지가 랜더링되므로)
-    })
+
+        // 2초 후에 false로 상태 변경
+        setTimeout(() => {setAlert(false)}, 2000)
+    },[]) // [] : dependancy => []안의 값이 변경 될 경우에만 useEffect 수행하게 됨
+
+    // <useEffect> 정리
+    // 1. 재 렌더링마다 코드 실행하고 싶다면
+    // 2. mount시 1회 코드 실행 하고 싶다면
+    // 3. unmount 시 1회 코드 실행하고 싶다면
+    // 4. useEffect 실행 전에 뭔가 실행하려면 return () => {}
 
     let [count, setCount] = useState(0)
 
     return(
         <div className="container">
-            <div className="alert alert-wraning">
-                2초 이내 구매시 할인
-            </div>
+            {
+                alert 
+                ? <div className="alert alert-wraning">
+                    2초 이내 구매시 할인
+                    </div> 
+                : null
+            }
             {count}
             <Box>
                 <NewBtn bg='blue' onClick={()=>setCount(count+1)}>노란색 버튼</NewBtn>
