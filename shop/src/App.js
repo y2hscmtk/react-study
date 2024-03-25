@@ -19,13 +19,17 @@ import {Routes, Route, Link, useNavigate, Outlet} from 'react-router-dom'
 
 import Detail from './Detail.js';
 
+import axios from 'axios'
+
 // React Bootstrap에서 버튼 사용하기
 function App() {
 
-  let [shoes] = useState(data) // data.js 의 데이터 가져오기
+  let [shoes,setShoes] = useState(data) // data.js 의 데이터 가져오기
 
   // useNavigate 훅 : 페이지 이동을 도와주는 함수
   let navigate = useNavigate() 
+
+  let [more,setMore] = useState(2) // 더보기 메뉴 선택시
 
   return (
     <div className='App'>
@@ -82,7 +86,24 @@ function App() {
         {/* 페이지를 여러개 만들고 싶다면 URL파라미터 활용 :id 를 통해 아아디 전달*/}
         <Route path='/detail/:id' element={<Detail shoes = {shoes} />}></Route>
         
+        
+
       </Routes>
+
+      <Button onClick={()=>{
+          // axios를 활용한 ajax 요청하는 방법
+          axios.get(`https://codingapple1.github.io/shop/data${more}.json`)
+          .then((result)=>{
+            let copy = [...shoes, ...result.data]
+            setShoes(copy)
+            setMore(more+1)
+          }) // data : 서버에서 실제로 가져온 데이터
+          .catch(()=>{
+            console.log('데이터 갱신 실패')
+          })
+        }}>
+          더보기
+        </Button>
 
     </div>
   );

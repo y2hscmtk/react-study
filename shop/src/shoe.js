@@ -4,9 +4,11 @@ import { useNavigate } from "react-router-dom"
 function Shoe(props){
     let shoe = props.data
     let navigate = useNavigate() 
+    let imageUrl = `https://codingapple1.github.io/shop/shoes${shoe.id+1}.jpg`;
+
     return (
         <div className='col-md-4'>
-            <img src={shoe.img} width="80%" onClick={() => navigate(`/detail/${shoe.id}`)}/>
+            <img src={imageUrl} width="80%" onClick={() => navigate(`/detail/${shoe.id}`)}/>
             <h4>{shoe.title}</h4>
             <p>{shoe.price}</p>
         </div>

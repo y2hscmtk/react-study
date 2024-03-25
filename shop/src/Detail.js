@@ -35,6 +35,7 @@ function Detail(props){
         setTimeout(() => {setAlert(false)}, 2000)
     },[]) // [] : dependancy => []안의 값이 변경 될 경우에만 useEffect 수행하게 됨
 
+
     // <useEffect> 정리
     // 1. 재 렌더링마다 코드 실행하고 싶다면
     // 2. mount시 1회 코드 실행 하고 싶다면
