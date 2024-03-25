@@ -31,6 +31,8 @@ function App() {
 
   let [more,setMore] = useState(2) // 더보기 메뉴 선택시
 
+  let [탭,탭변경] = useState(1)
+
   return (
     <div className='App'>
       <Navbar bg="light" data-bs-theme="light">
@@ -104,10 +106,37 @@ function App() {
         }}>
           더보기
         </Button>
-
+        <Nav variant="tabs" defaultActiveKey="link-1">
+          <Nav.Item>
+            <Nav.Link onClick = {()=>탭변경(1)}eventKey="link-1">버튼 1</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link onClick = {()=>탭변경(2)} eventKey="link-2">버튼 2</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link onClick = {()=>탭변경(3)} eventKey="link-3">버튼 3</Nav.Link>
+          </Nav.Item>
+        </Nav>
+        
+        <TabContent 탭={탭}/>
     </div>
   );
 }
+
+// 조건문은 밖에서 사용해야한다.
+// 컴포넌트화
+
+function TabContent(props){
+  let 탭 = props.탭
+  if(탭==1){
+    return <div>내용1</div>
+  } else if(탭==2){
+    return <div>내용2</div>
+  } else if(탭==3){
+    return <div>내용3</div>
+  }
+}
+
 
 export default App;
 
