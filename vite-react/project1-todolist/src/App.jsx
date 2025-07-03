@@ -49,8 +49,8 @@ function App() {
   return (
     <div className='App'>
       <Header/>
-      <Edithor onCreate={onCreate}/>
-      <List/>
+      <Edithor onCreate={onCreate} />
+      <List todos={todos} />
     </div>
   )
 }
