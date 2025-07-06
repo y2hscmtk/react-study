@@ -1,8 +1,12 @@
 import "../TodoItem.css"
 
-const TodoItem = ({id,isDone, content, date, onUpdate}) => {
+const TodoItem = ({id,isDone, content, date, onUpdate, onDelete}) => {
     const onChangeCheckBox = () => {
         onUpdate(id) // 체크박스가 눌렸을 경우, 해당 객체의 상태 변경
+    }
+
+    const onClickDeleteButton = () => {
+        onDelete(id)
     }
     return (
         <div className="TodoItem">
@@ -12,7 +16,7 @@ const TodoItem = ({id,isDone, content, date, onUpdate}) => {
                 type="checkbox" />
             <div className="content">{content}</div>
             <div className="Date">{new Date(date).toLocaleDateString()}</div>
-            <button>삭제</button>
+            <button onClick={onClickDeleteButton}>삭제</button>
         </div>
     )
 }

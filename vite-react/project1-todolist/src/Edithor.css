@@ -1,6 +1,6 @@
 .Edithor {
   display: flex;
-  grid-area: 10px;
+  gap: 10px;
 }
 
 .Edithor input {

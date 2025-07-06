@@ -60,11 +60,19 @@ function App() {
     }))
   }
 
+  const onDelete = (targetId) => {
+    // 인수 : targetId를 제외한 모든 todoItem
+    setTodos(todos.filter((todo) => todo.id !== targetId))
+  }
+
   return (
     <div className='App'>
       <Header/>
       <Edithor onCreate={onCreate} />
-      <List todos={todos} onUpdate={onUpdate}/>
+      <List 
+        todos={todos} 
+        onUpdate={onUpdate} 
+        onDelete={onDelete}/>
     </div>
   )
 }
