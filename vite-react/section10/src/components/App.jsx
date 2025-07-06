@@ -28,6 +28,12 @@ const mockData = [
   },
 ]
 
+// React.memo
+// React의 내장함수로서, 컴포넌트를 받아서 최적화된 컴포넌트(메모이제이션 컴포넌트)를 반환한다.
+// 최적화된 컴포넌트는 부모 컴포넌트가 재랜더링 되더라도, 자신의 props가 변경되지 않는다면 재랜더링 되지 않는다.
+// -> props를 depth로 취급한다.
+
+
 // useReducer
 // 컴포넌트 내부에 새로운 state를 생성하는 react hook
 // 모든 useState는 useReducer로 대체 가능
@@ -81,7 +87,7 @@ function App() {
 
   return (
     <div className='App'>
-      <Header/>
+      <Header/> 
       <Edithor onCreate={onCreate} />
       <List 
         todos={todos} 
