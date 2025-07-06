@@ -1,5 +1,5 @@
 import "../App.css"
-import { useState, useRef, useReducer } from 'react'
+import { useRef, useReducer } from 'react'
 import Header from './Header'
 import Edithor from './Edithor'
 import List from './List'
@@ -81,7 +81,6 @@ function App() {
 
   return (
     <div className='App'>
-      <Exam></Exam>
       <Header/>
       <Edithor onCreate={onCreate} />
       <List 
