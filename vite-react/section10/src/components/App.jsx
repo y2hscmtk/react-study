@@ -1,5 +1,5 @@
 import "../App.css"
-import { useRef, useReducer } from 'react'
+import { useRef, useReducer, useCallback } from 'react'
 import Header from './Header'
 import Edithor from './Edithor'
 import List from './List'
@@ -28,11 +28,6 @@ const mockData = [
   },
 ]
 
-// React.memo
-// React의 내장함수로서, 컴포넌트를 받아서 최적화된 컴포넌트(메모이제이션 컴포넌트)를 반환한다.
-// 최적화된 컴포넌트는 부모 컴포넌트가 재랜더링 되더라도, 자신의 props가 변경되지 않는다면 재랜더링 되지 않는다.
-// -> props를 depth로 취급한다.
-
 
 // useReducer
 // 컴포넌트 내부에 새로운 state를 생성하는 react hook
@@ -59,7 +54,14 @@ function App() {
   const [todos, disptach] = useReducer(reducer, mockData) // 기존 state를 모두 useReducer로 변경
   const idRef = useRef(3) // 아이디 설정용
 
-  const onCreate  = (content) => {
+
+  // useCallback
+  // 함수의 불필요한 재생성을 방지하기 위한 훅
+  // 콜백을 통해 생성된 함수를 props가 변경될때만 재생성되게함
+  // onCreate, onDelete 등을 재생성되지 않도록 할수 있음
+  // 최적화는 기능을 전부 완성한 뒤 마지막에 하는것이 바람직하다.
+  // 최적화 대상 : 꼭 최적화가 필요할것같은 연산이나 컴포넌트에만 적용
+  const onCreate = useCallback((content) => {
     disptach({
       type: "CREATE",
       data: {
@@ -69,21 +71,21 @@ function App() {
         date: new Date().getTime()
       }
     })
-  }
+  },[])
 
-  const onUpdate = (targetId) => {
+  const onUpdate = useCallback((targetId) => {
     disptach({
       type:"UPDATE",
       targetId : targetId
     })
-  }
+  },[])
 
-  const onDelete = (targetId) => {
+  const onDelete = useCallback((targetId) => {
     disptach({
       type:"DELETE",
       targetId: targetId
     })
-  }
+  },[])
 
   return (
     <div className='App'>
