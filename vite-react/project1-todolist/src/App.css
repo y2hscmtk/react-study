@@ -1,7 +1,0 @@
-.App {
-  width: 500px;
-  margin: 0 auto;
-  display: flex; /*App 이라는 클래스 요소 밑에 있는 자식 요소들의 배치를 유연하게 할수 있도록 허용 - 기본값은 세로*/
-  flex-direction: column; /*자식 요소들이 세로(column)로 배치됨*/
-  gap: 10px; /* display가 flex로 설정된 요소들만 적용 가능 - 간격 설정*/
-}
