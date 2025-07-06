@@ -1,8 +1,8 @@
-import './App.css'
+import "../App.css"
 import { useState,useRef } from 'react'
-import Header from './components/Header'
-import Edithor from './components/Edithor'
-import List from './components/List'
+import Header from './Header'
+import Edithor from './Edithor'
+import List from './List'
 
 // 더미데이터 객체 배열 정의
 // 매번 재생성 될 필요 없으므로 외부로 분리
@@ -41,16 +41,30 @@ function App() {
       content: content,
       date: new Date().getTime()
     }
-    console.log("newTodo", newTodo)
     // state 변수는 useState를 통해서만 변경 가능
     setTodos([newTodo, ...todos]);
-    console.log(todos)
   }
+
+  const onUpdate = (targetId) => {
+    // todos STate의 값들 중에
+    // targetId와 일치하는 Id를 갖는 투두 아이템의 isDone 변환
+    // 인수 : todos 배열에서 targetId와 일치하는 Id를 갖는 요소의 데이터만 바꾼 새로운 배열 생성 후 반환
+    setTodos(todos.map((todo)=>{    
+      if(todo.id === targetId){
+        return {
+          ...todo, // 기존 값
+          isDone: !todo.isDone // isDone 값만 수정
+        }
+      }
+      return todo
+    }))
+  }
+
   return (
     <div className='App'>
       <Header/>
       <Edithor onCreate={onCreate} />
-      <List todos={todos} />
+      <List todos={todos} onUpdate={onUpdate}/>
     </div>
   )
 }
