@@ -1,8 +1,11 @@
 import "../List.css"
+import { TodoContext } from "./App"
 import TodoItem from "./TodoItem"
-import { useState,useMemo } from "react"
+import { useState,useMemo,useContext } from "react"
 
-const List = ({todos, onUpdate, onDelete}) => {
+const List = () => {
+    // 구조분해 할당을 통해 TodoContext에서 필요한 데이터 수령
+    const {todos} = useContext(TodoContext)
     const [search, setSearch] = useState("")
 
     const onChageSearch = (e) => {
@@ -45,7 +48,13 @@ const List = ({todos, onUpdate, onDelete}) => {
             <input value={search} onChange={onChageSearch} placeholder="검색어를 입력하세요" />
             <div className="todos_wrapper">
                 {filteredTodos.map((todo) => {
-                    return <TodoItem key={todo.id} onUpdate={onUpdate} onDelete={onDelete} {...todo} />
+                    // return <TodoItem 
+                    //     key={todo.id}
+                    //     {...todo} 
+                    //     onUpdate={onUpdate} 
+                    //     onDelete={onDelete} 
+                    // />
+                    return <TodoItem key={todo.id} {...todo}/>
                 })}
             </div>
         </div>

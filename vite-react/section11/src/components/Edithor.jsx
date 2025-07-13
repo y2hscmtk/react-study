@@ -1,7 +1,12 @@
 import "../Edithor.css"
-import { useState,useRef } from "react"
+import { useState,useRef,useContext } from "react"
+import { TodoContext } from "./App"
 
-const Edithor = ({onCreate}) => {
+const Edithor = () => {
+    // useContext를 통해 TodoContext로부터 데이터 꺼내기
+    // const data = useContext(TodoContext);
+    const { onCreate } = useContext(TodoContext) // 필요한 데이터만 구조분해 할당을 통해 수령
+
     const [content, setContent] = useState("")
     const contentRef = useRef()
     // 이벤트 헨들러 정의
