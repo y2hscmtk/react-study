@@ -25,7 +25,8 @@ export default defineConfig([
     rules: { // 비활성화
       'no-unused-vars': "off",
       "react/prop-types" : "off",
-      "react-refresh/only-export-components" : "off" // 컴포넌트 export를 하지 않을 경우 오류 발생 Off
+      "react-refresh/only-export-components" : "off", // 컴포넌트 export를 하지 않을 경우 오류 발생 Off
+      "react-hooks/exhaustive-deps" : "off"
     },
   },
 ])
