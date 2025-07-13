@@ -1,5 +1,5 @@
 import "../App.css"
-import { useRef, useReducer, useCallback, createContext } from 'react'
+import { useRef, useReducer, useCallback, createContext,useMemo } from 'react'
 import Header from './Header'
 import Edithor from './Edithor'
 import List from './List'
@@ -50,7 +50,12 @@ function reducer(state, action){
 }
 
 // 컨텍스트(일종의 저장소) 생성 -> 보통 컴포넌트 외부에 생성(컴포넌트가 랜더링 될때마다 새로운 컨텍스트가 생성되지 않도록 하기 위함)
-export const TodoContext = createContext() // 제공된 데이터를 수령받기 위해, 외부에서 TodoContext에 접근할수 있어야함 -> export를 통해 외부에서 사용 가능
+// export const TodoContext = createContext() // 제공된 데이터를 수령받기 위해, 외부에서 TodoContext에 접근할수 있어야함 -> export를 통해 외부에서 사용 가능
+
+// 컨텍스트 분리 -> 최적화
+export const TodoStateContext = createContext() // 변화되는 값(todos)을 공급하기 위한 컨텍스트
+export const TodoDispstchContext = createContext() // 변하지 않는 값들(onCreate, onUpdate, onDelete...)를 공급하는 컨텍스트
+
 
 function App() {
   const [todos, disptach] = useReducer(reducer, mockData) // 기존 state를 모두 useReducer로 변경
@@ -89,6 +94,10 @@ function App() {
     })
   },[])
 
+  const memoizedDispatch = useMemo(() => {
+    return {onCreate, onUpdate, onDelete}
+  },[]) // [] 의 데이터가 변경될 때에만 재성성
+
   // props의 전달을 위해 중간다리 역할로 List 컴포넌트를 거쳐가기 때문에, Props Drilling이 발생하고 있다.
   // Props Drilling : 직계자손이 아닌 컴포넌트에게 Props를 전달하기 위해 다른 컴포넌트를 거쳐서 Props를 전달하는 경우를 의미
   // -> React Context를 통해 보완할수 있다.
@@ -96,23 +105,13 @@ function App() {
   return (
     <div className='App'>
       <Header/> 
-      <TodoContext.Provider 
-        value={{ // 컨텍스트를 통해 공유할 데이터는 value property를 통해 제공한다. 여러 데이터를 한번에 제공하기 위해 객체로 묶어서 제공하였다.
-          todos, 
-          onCreate,
-          onUpdate,
-          onDelete
-      }}>
-        {/* <Edithor onCreate={onCreate} /> */}
-        <Edithor/>
-        {/* <List 
-          todos={todos} 
-          onUpdate={onUpdate} 
-          onDelete={onDelete}
-          />
-         */}
-        <List/>
-      </TodoContext.Provider>
+      <TodoStateContext.Provider value={todos}>
+        <TodoDispstchContext.Provider
+          value={memoizedDispatch} > {/* useMemo를 사용하여 전달되는 객체를 최초 마운트 이후 재생성되지 않도록 설정 */}
+            <Edithor/>
+            <List/>
+        </TodoDispstchContext.Provider>
+      </TodoStateContext.Provider>
       
     </div>
   )

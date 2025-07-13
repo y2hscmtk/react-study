@@ -1,10 +1,10 @@
 import "../TodoItem.css"
 import { memo, useContext } from "react"
-import { TodoContext } from "./App"
+import { TodoDispstchContext } from "./App"
 
 const TodoItem = ({id,isDone,content,date }) => {
     // TodoContext에서 필요한 데이터 구조분해 할당을 통해 획득
-    const {onUpdate, onDelete} = useContext(TodoContext)
+    const {onUpdate, onDelete} = useContext(TodoDispstchContext)
 
     const onChangeCheckBox = () => {
         onUpdate(id) // 체크박스가 눌렸을 경우, 해당 객체의 상태 변경

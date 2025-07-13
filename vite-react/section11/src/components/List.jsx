@@ -1,11 +1,10 @@
 import "../List.css"
-import { TodoContext } from "./App"
+import { TodoStateContext } from "./App"
 import TodoItem from "./TodoItem"
 import { useState,useMemo,useContext } from "react"
 
 const List = () => {
-    // 구조분해 할당을 통해 TodoContext에서 필요한 데이터 수령
-    const {todos} = useContext(TodoContext)
+    const todos = useContext(TodoStateContext) // 상태 정보 수령
     const [search, setSearch] = useState("")
 
     const onChageSearch = (e) => {
