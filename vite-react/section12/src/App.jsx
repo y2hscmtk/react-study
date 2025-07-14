@@ -5,6 +5,9 @@ import Diary from './pages/Diary'
 import New from './pages/New'
 import Notfound from './pages/Notfound'
 import './App.css'
+import getEmotionImage from './util/get-emotion-image'
+
+
 
 // 1. "/" : 모든 일기를 조회하는 Home 페이지
 // 2. "/new" : 새로운 일기를 작성하는 New 페이지
@@ -26,6 +29,14 @@ function App() {
     // Link 태그는 Client-Side 랜더링 방식으로 페이징 렌더링 수행 -> 이전 페이지를 날리지 않고, 필요한 페이지만 교체하는 방식으로 랜더링 수행
     <>
       <div>
+        <img src={getEmotionImage(1)} />
+        <img src={getEmotionImage(2)} />
+        <img src={getEmotionImage(3)} />
+        <img src={getEmotionImage(4)} />
+        <img src={getEmotionImage(5)} />
+      </div>
+
+      <div>
         <Link to={"/"}>Home</Link>
         <Link to={"/new"}>New</Link>
         <Link to={"/diary"}>Diary</Link>
@@ -36,7 +47,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/new' element={<New/>}/>
-        <Route path='/diary' element={<Diary/>}/>
+        <Route path='/diary/:id' element={<Diary/>}/>
         <Route path='*' element={<Notfound/>}/>
       </Routes>
     </>
