@@ -1,6 +1,6 @@
 import "./App.css"
-import { useReducer } from "react"
-import { Routes, Route, useNavigate, data } from 'react-router-dom'
+import { useReducer, useRef, createContext } from "react"
+import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Diary from './pages/Diary'
 import Edit from './pages/Edit'
@@ -26,49 +26,110 @@ const mockData = [
 // useReducer용
 // 상태 관리 함수
 function reducer(state, action) {
-  return state
+  switch (action.type){
+    case "CREATE":
+      return [action.data, ...state];
+    case "UPDATE":
+      return state.map((item) => 
+        String(item.id) === String(action.data.id) 
+          ? action.data 
+          : item
+      )
+    case "DELETE":
+      return state.filter((item) => String(item.id) !== String(action.id))
+    default:
+      return state;
+  }
 }
-// 1. "/" : 모든 일기를 조회하는 Home 페이지
-// 2. "/new" : 새로운 일기를 작성하는 New 페이지
-// 3. "/diary" : 일기를 상세히 조회하는 Diary 페이지
+
+const DiaryStateContext = createContext(); // 상태 변수 관리
+const DiaryDisptatchContext = createContext(); // 상태 변경 함수 관리
+
 function App() {
-  // 버튼을 통한 이동을 원할 때에는 useNavigate를 활용한다.
-  // useNavigate는 라우팅 이동을 위한 navigate 함수를 반환한다.
-  // const nav = useNavigate()
-  
-  // const onClickButton = () => {
-  //   nav("/new") // 라우팅을 통해 이동하고자 하는 경로를 인수로 전달한다.
-  // }
-
   const [data, dispatch] = useReducer(reducer, mockData)
+  const idRef = useRef(3) // 기존 data에 이미 2개의 데이터가 존재하므로
 
+  // 새로운 일기 추가
+  const onCreate = (createdDate, emotionId, content) => {
+    dispatch({
+      type: "CREATE",
+      data: {
+        id : idRef.current++,
+        createdDate,
+        emotionId,
+        content
+      }
+    })
+  }
+
+  // 새로운 일기 수정
+  const onUpdate = (id, createdDate, emotionId, content) => {
+    dispatch(
+      {
+        type : "UPDATE",
+        data: {
+          id,
+          createdDate,
+          emotionId,
+          content,
+        }
+      }
+    )
+  };
+
+  // 기존 일기 삭제
+  const onDelete = (id) => {
+    dispatch({
+      type: "DELETE",
+      id
+    })
+  }
+
+  
   return (
     // Routes에 의해서 path와 일치하는 컴포넌트를 찾아 랜더링한다.
     // Routes 컴포넌트 안에는 Route 컴포넌트만 들어갈 수 있다.
     // Routes 컴포넌트 외부에 작성된 컴포넌트는, 페이지와 관련없이 모든 컴포넌트에서 랜더링 된다.(예 : 헤더 컴포넌트, 등)
     <>
-      {/* <div>
-        <img src={getEmotionImage(1)} />
-        <img src={getEmotionImage(2)} />
-      </div>
-      // Link 태그는 Client-Side 랜더링 방식으로 페이징 렌더링 수행 
-      // -> 이전 페이지를 날리지 않고, 필요한 페이지만 교체하는 방식으로 랜더링 수행
-      <div>
-        <Link to={"/"}>Home</Link>
-        <Link to={"/new"}>New</Link>
-        <Link to={"/diary"}>Diary</Link>
-      </div>
-      <button onClick={onClickButton}>
-        New 페이지로 이동
-      </button> */}
-      
-      <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/new' element={<New/>}/>
-        <Route path='/diary/:id' element={<Diary/>}/>
-        <Route path='/edit/:id' element={<Edit />}/>
-        <Route path='*' element={<Notfound/>}/>
-      </Routes>
+    <button 
+      onClick={() => {
+        onCreate(new Date().getTime(), 1, "Hello")
+      }}
+    >
+      일기 추가 테스트
+    </button>
+    <button 
+      onClick={() => {
+        onUpdate(1, new Date().getTime(), 3, "수정된 테스트입니다.")
+      }}
+    >
+      일기 수정 테스트
+    </button>
+    <button 
+      onClick={() => {
+        onDelete(1)
+        }}
+    >
+      일기 삭제 테스트
+    </button>
+    
+    <DiaryStateContext value={data}>
+      <DiaryDisptatchContext 
+        value={{
+          onCreate,
+          onUpdate,
+          onDelete
+        }}
+      >
+        <Routes>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/new' element={<New/>}/>
+          <Route path='/diary/:id' element={<Diary/>}/>
+          <Route path='/edit/:id' element={<Edit />}/>
+          <Route path='*' element={<Notfound/>}/>
+        </Routes>
+      </DiaryDisptatchContext>
+    </DiaryStateContext>
     </>
   )
 }
