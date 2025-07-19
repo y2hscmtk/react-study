@@ -6,6 +6,8 @@ import New from './pages/New'
 import Notfound from './pages/Notfound'
 import './App.css'
 import getEmotionImage from './util/get-emotion-image'
+import Button from './components/Button'
+import Header from './components/Header'
 
 
 
@@ -28,7 +30,7 @@ function App() {
     //
     // Link 태그는 Client-Side 랜더링 방식으로 페이징 렌더링 수행 -> 이전 페이지를 날리지 않고, 필요한 페이지만 교체하는 방식으로 랜더링 수행
     <>
-      <div>
+      {/* <div>
         <img src={getEmotionImage(1)} />
         <img src={getEmotionImage(2)} />
         <img src={getEmotionImage(3)} />
@@ -43,7 +45,34 @@ function App() {
       </div>
       <button onClick={onClickButton}>
         New 페이지로 이동
-      </button>
+      </button> */}
+      
+      <Header title={"Header"}
+        leftChild={<Button text={"left"}/>}
+        rightChild={<Button text={"rigth"}/>}
+      />
+
+      <Button
+        text={"134"}
+        type={"DEFAULT"}
+        onClick={() => {
+          console.log("123번 버튼 클릭")
+        }}
+      />
+      <Button
+        text={"134"}
+        type={"POSITIVE"}
+        onClick={() => {
+          console.log("123번 버튼 클릭")
+        }}
+      />
+      <Button
+        text={"134"}
+        type={"NEGATIVE"}
+        onClick={() => {
+          console.log("123번 버튼 클릭")
+        }}
+      />
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/new' element={<New/>}/>
