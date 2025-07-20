@@ -1,12 +1,18 @@
-import { useSearchParams } from "react-router-dom"
+import Header from "../components/Header"
+import Button from "../components/Button"
+import DiaryList from "../components/DiaryList"
 
-// 쿼리스트링을 통한 값 전달을 useState 처럼 사용할 수 있다.(획득, 조작 가능)
-// locallhost:5173/?value=hello 와 같이 들어온 경우
-// params.get("value") 를 통해 hello 획득 가능
 const Home = () => {
-    const [params, setParams] = useSearchParams()
-    console.log(params.get("value"))
-    return <div>Home</div>
+    return (
+        <div>
+            <Header 
+                title={"2024년 2월"}
+                leftChild={<Button text={"<"}/>}
+                rightChild={<Button text={">"}/>}
+            />
+            <DiaryList/>
+        </div>
+    )
 }
 
 export default Home

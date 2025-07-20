@@ -6,7 +6,6 @@ import Diary from './pages/Diary'
 import Edit from './pages/Edit'
 import New from './pages/New'
 import Notfound from './pages/Notfound'
-import './App.css'
 
 const mockData = [
   {
@@ -91,7 +90,7 @@ function App() {
     // Routes 컴포넌트 안에는 Route 컴포넌트만 들어갈 수 있다.
     // Routes 컴포넌트 외부에 작성된 컴포넌트는, 페이지와 관련없이 모든 컴포넌트에서 랜더링 된다.(예 : 헤더 컴포넌트, 등)
     <>
-    <button 
+    {/* <button 
       onClick={() => {
         onCreate(new Date().getTime(), 1, "Hello")
       }}
@@ -111,7 +110,7 @@ function App() {
         }}
     >
       일기 삭제 테스트
-    </button>
+    </button> */}
     
     <DiaryStateContext value={data}>
       <DiaryDisptatchContext 
