@@ -10,15 +10,21 @@ import Notfound from './pages/Notfound'
 const mockData = [
   {
     id : 1,
-    createdDate : new Date().getTime(),
+    createdDate : new Date("2025-07-20").getTime(),
     emotionId : 1,
     content: "1번 일기 내용"
   },
   {
     id : 2,
-    createdDate : new Date().getTime(),
+    createdDate : new Date("2025-07-19").getTime(),
     emotionId : 2,
     content: "2번 일기 내용"
+  },
+  {
+    id : 3,
+    createdDate : new Date("2025-06-29").getTime(),
+    emotionId : 3,
+    content: "3번 일기 내용"
   }
 ]
 
@@ -41,8 +47,8 @@ function reducer(state, action) {
   }
 }
 
-const DiaryStateContext = createContext(); // 상태 변수 관리
-const DiaryDisptatchContext = createContext(); // 상태 변경 함수 관리
+export const DiaryStateContext = createContext(); // 상태 변수 관리
+export const DiaryDisptatchContext = createContext(); // 상태 변경 함수 관리
 
 function App() {
   const [data, dispatch] = useReducer(reducer, mockData)
